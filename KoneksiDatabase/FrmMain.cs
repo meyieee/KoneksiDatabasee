@@ -25,7 +25,7 @@ namespace KoneksiDatabase
             try
             {
                 koneksi.Open();
-                query = "select * from tbl_pengguna";
+                query = string.Format("select * from tbl_pengguna");
                 perintah = new MySqlCommand(query, koneksi);
                 adapter = new MySqlDataAdapter(perintah);
                 perintah.ExecuteNonQuery();
@@ -44,8 +44,17 @@ namespace KoneksiDatabase
                 dataGridView1.Columns[4].Width = 120;
                 dataGridView1.Columns[4].HeaderText = "Level";
 
-                ClearForm();
-                EnableButtons(false, false, true, false, true);
+                txtID.Clear();
+                txtNama.Clear();
+                txtPassword.Clear();
+                txtUsername.Clear();
+                txtID.Focus();
+                btnUpdate.Enabled = false;
+                btnDelete.Enabled = false;
+                btnClear.Enabled = false;
+                btnSave.Enabled = true;
+                btnSearch.Enabled = true;
+
             }
             catch (Exception ex)
             {
@@ -71,13 +80,13 @@ namespace KoneksiDatabase
             btnSearch.Enabled = search;
         }
 
-        private void btnSearch_Click(object sender, EventArgs e)
+        private void btnUpdate_Click(object sender, EventArgs e)
         {
             try
             {
                 if (txtUsername.Text != "")
                 {
-                    query = $"select * from tbl_pengguna where username = '{txtUsername.Text}'";
+                    query = string.Format("select * from tbl_pengguna where username = '{0}'", txtUsername.Text);
                     ds.Clear();
                     koneksi.Open();
                     perintah = new MySqlCommand(query, koneksi);
@@ -93,16 +102,26 @@ namespace KoneksiDatabase
                             txtPassword.Text = kolom["password"].ToString();
                             txtNama.Text = kolom["nama_pengguna"].ToString();
                             CBLevel.Text = kolom["level"].ToString();
+
                         }
                         txtUsername.Enabled = false;
                         dataGridView1.DataSource = ds.Tables[0];
-                        EnableButtons(true, true, false, true, false);
+                        btnSave.Enabled = false;
+                        btnUpdate.Enabled = true;
+                        btnDelete.Enabled = true;
+                        btnSearch.Enabled = false;
+                        btnClear.Enabled = true;
                     }
                     else
                     {
                         MessageBox.Show("Data Tidak Ada !!");
                         FrmMain_Load(null, null);
                     }
+
+                }
+                else
+                {
+                    MessageBox.Show("Data Yang Anda Pilih Tidak Ada !!");
                 }
             }
             catch (Exception ex)
@@ -110,6 +129,58 @@ namespace KoneksiDatabase
                 MessageBox.Show(ex.ToString());
             }
         }
+
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (txtUsername.Text != "")
+                {
+                    query = string.Format("select * from tbl_pengguna where username = '{0}'", txtUsername.Text);
+                    ds.Clear();
+                    koneksi.Open();
+                    perintah = new MySqlCommand(query, koneksi);
+                    adapter = new MySqlDataAdapter(perintah);
+                    perintah.ExecuteNonQuery();
+                    adapter.Fill(ds);
+                    koneksi.Close();
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        foreach (DataRow kolom in ds.Tables[0].Rows)
+                        {
+                            txtID.Text = kolom["id_pengguna"].ToString();
+                            txtPassword.Text = kolom["password"].ToString();
+                            txtNama.Text = kolom["nama_pengguna"].ToString();
+                            CBLevel.Text = kolom["level"].ToString();
+
+                        }
+                        txtUsername.Enabled = false;
+                        dataGridView1.DataSource = ds.Tables[0];
+                        btnSave.Enabled = false;
+                        btnUpdate.Enabled = true;
+                        btnDelete.Enabled = true;
+                        btnSearch.Enabled = false;
+                        btnClear.Enabled = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Data Tidak Ada !!");
+                        FrmMain_Load(null, null);
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("Data Yang Anda Pilih Tidak Ada !!");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
 
         private void btnSave_Click(object sender, EventArgs e)
         {
@@ -117,19 +188,23 @@ namespace KoneksiDatabase
             {
                 if (txtUsername.Text != "" && txtPassword.Text != "" && txtNama.Text != "")
                 {
-                    query = $"insert into tbl_pengguna values ('{txtID.Text}','{txtUsername.Text}','{txtPassword.Text}','{txtNama.Text}','{CBLevel.Text}')";
+
+                    query = string.Format("insert into tbl_pengguna values ('{0}','{1}','{2}','{3}','{4}');", txtID.Text, txtUsername.Text, txtPassword.Text, txtNama.Text, CBLevel.Text);
+
+
                     koneksi.Open();
                     perintah = new MySqlCommand(query, koneksi);
+                    adapter = new MySqlDataAdapter(perintah);
                     int res = perintah.ExecuteNonQuery();
                     koneksi.Close();
                     if (res == 1)
                     {
-                        MessageBox.Show("Insert Data Sukses ...");
+                        MessageBox.Show("Insert Data Suksess ...");
                         FrmMain_Load(null, null);
                     }
                     else
                     {
-                        MessageBox.Show("Gagal insert Data . . . ");
+                        MessageBox.Show("Gagal inser Data . . . ");
                     }
                 }
                 else
@@ -143,37 +218,6 @@ namespace KoneksiDatabase
             }
         }
 
-        private void btnUpdate_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (txtPassword.Text != "" && txtNama.Text != "" && txtUsername.Text != "" && txtID.Text != "")
-                {
-                    query = $"update tbl_pengguna set password = '{txtPassword.Text}', nama_pengguna = '{txtNama.Text}', level = '{CBLevel.Text}' where id_pengguna = '{txtID.Text}'";
-                    koneksi.Open();
-                    perintah = new MySqlCommand(query, koneksi);
-                    int res = perintah.ExecuteNonQuery();
-                    koneksi.Close();
-                    if (res == 1)
-                    {
-                        MessageBox.Show("Update Data Sukses ...");
-                        FrmMain_Load(null, null);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Gagal Update Data . . . ");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Data Tidak lengkap !!");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
@@ -181,24 +225,29 @@ namespace KoneksiDatabase
             {
                 if (txtID.Text != "")
                 {
-                    query = $"delete from tbl_pengguna where id_pengguna = '{txtID.Text}'";
-                    koneksi.Open();
-                    perintah = new MySqlCommand(query, koneksi);
-                    int res = perintah.ExecuteNonQuery();
-                    koneksi.Close();
-                    if (res == 1)
+                    if (MessageBox.Show("Anda Yakin Menghapus Data Ini ??", "Warning", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
-                        MessageBox.Show("Delete Data Sukses ...");
-                        FrmMain_Load(null, null);
+                        query = string.Format("Delete from tbl_pengguna where id_pengguna = '{0}'", txtID.Text);
+                        ds.Clear();
+                        koneksi.Open();
+                        perintah = new MySqlCommand(query, koneksi);
+                        adapter = new MySqlDataAdapter(perintah);
+                        int res = perintah.ExecuteNonQuery();
+                        koneksi.Close();
+                        if (res == 1)
+                        {
+                            MessageBox.Show("Delete Data Suksess ...");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Gagal Delete data");
+                        }
                     }
-                    else
-                    {
-                        MessageBox.Show("Gagal Hapus Data . . . ");
-                    }
+                    FrmMain_Load(null, null);
                 }
                 else
                 {
-                    MessageBox.Show("ID Tidak Ditemukan !!");
+                    MessageBox.Show("Data Yang Anda Pilih Tidak Ada !!");
                 }
             }
             catch (Exception ex)
@@ -206,11 +255,40 @@ namespace KoneksiDatabase
                 MessageBox.Show(ex.ToString());
             }
         }
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            Form1 form1 = new Form1();
+            form1.Show();
+            this.Hide();
+
+        }
+
+        private void txtIDPengguna_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void CBLevel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            ClearForm();
-            EnableButtons(false, false, true, false, true);
+            try
+            {
+                FrmMain_Load(null, null);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
-}
+    }
+

@@ -1,238 +1,247 @@
-﻿namespace KoneksiDatabase
+﻿using System;
+using System.Windows.Forms;
+
+namespace KoneksiDatabase
 {
-    partial class FrmMain
+    public partial class FrmMain : Form
     {
-        private System.ComponentModel.IContainer components = null;
+        // Declare UI components
+        private Label lblIDPengguna, lblUsername, lblPassword, lblNamaPengguna, lblLevel;
+        private TextBox txtID, txtUsername, txtPassword, txtNama;
+        private ComboBox CBLevel;
+        private Button btnSave, btnSearch, btnUpdate, btnDelete, btnClear, btnLogout;
+        private DataGridView dataGridView1;
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        #region Windows Form Designer generated code
+      
 
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblIDPengguna = new System.Windows.Forms.Label();
+            this.lblUsername = new System.Windows.Forms.Label();
+            this.lblPassword = new System.Windows.Forms.Label();
+            this.lblNamaPengguna = new System.Windows.Forms.Label();
+            this.lblLevel = new System.Windows.Forms.Label();
             this.txtID = new System.Windows.Forms.TextBox();
             this.txtUsername = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.txtNama = new System.Windows.Forms.TextBox();
             this.CBLevel = new System.Windows.Forms.ComboBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btnSave = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnLogout = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // lblIDPengguna
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(50, 30);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(85, 16);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "ID Pengguna";
+            this.lblIDPengguna.Location = new System.Drawing.Point(20, 20);
+            this.lblIDPengguna.Name = "lblIDPengguna";
+            this.lblIDPengguna.Size = new System.Drawing.Size(100, 23);
+            this.lblIDPengguna.TabIndex = 0;
+            this.lblIDPengguna.Text = "ID Pengguna";
             // 
-            // label2
+            // lblUsername
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(50, 70);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(70, 16);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Username";
+            this.lblUsername.Location = new System.Drawing.Point(20, 60);
+            this.lblUsername.Name = "lblUsername";
+            this.lblUsername.Size = new System.Drawing.Size(100, 23);
+            this.lblUsername.TabIndex = 1;
+            this.lblUsername.Text = "Username";
             // 
-            // label3
+            // lblPassword
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(50, 108);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(67, 16);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Password";
+            this.lblPassword.Location = new System.Drawing.Point(20, 100);
+            this.lblPassword.Name = "lblPassword";
+            this.lblPassword.Size = new System.Drawing.Size(100, 23);
+            this.lblPassword.TabIndex = 2;
+            this.lblPassword.Text = "Password";
             // 
-            // label4
+            // lblNamaPengguna
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(50, 141);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(109, 16);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Nama Pengguna";
+            this.lblNamaPengguna.Location = new System.Drawing.Point(20, 140);
+            this.lblNamaPengguna.Name = "lblNamaPengguna";
+            this.lblNamaPengguna.Size = new System.Drawing.Size(100, 23);
+            this.lblNamaPengguna.TabIndex = 3;
+            this.lblNamaPengguna.Text = "Nama Pengguna";
             // 
-            // label5
+            // lblLevel
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(50, 181);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(43, 16);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "Level:";
+            this.lblLevel.Location = new System.Drawing.Point(20, 180);
+            this.lblLevel.Name = "lblLevel";
+            this.lblLevel.Size = new System.Drawing.Size(100, 23);
+            this.lblLevel.TabIndex = 4;
+            this.lblLevel.Text = "Level";
             // 
             // txtID
             // 
-            this.txtID.Location = new System.Drawing.Point(173, 30);
+            this.txtID.Location = new System.Drawing.Point(150, 20);
             this.txtID.Name = "txtID";
-            this.txtID.Size = new System.Drawing.Size(200, 22);
-            this.txtID.TabIndex = 6;
+            this.txtID.Size = new System.Drawing.Size(154, 22);
+            this.txtID.TabIndex = 5;
+            this.txtID.TextChanged += new System.EventHandler(this.txtIDPengguna_TextChanged);
             // 
             // txtUsername
             // 
-            this.txtUsername.Location = new System.Drawing.Point(173, 70);
+            this.txtUsername.Location = new System.Drawing.Point(150, 60);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(200, 22);
-            this.txtUsername.TabIndex = 7;
+            this.txtUsername.Size = new System.Drawing.Size(154, 22);
+            this.txtUsername.TabIndex = 6;
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(173, 108);
+            this.txtPassword.Location = new System.Drawing.Point(150, 100);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(200, 22);
-            this.txtPassword.TabIndex = 8;
+            this.txtPassword.Size = new System.Drawing.Size(154, 22);
+            this.txtPassword.TabIndex = 7;
             // 
             // txtNama
             // 
-            this.txtNama.Location = new System.Drawing.Point(173, 141);
+            this.txtNama.Location = new System.Drawing.Point(150, 140);
             this.txtNama.Name = "txtNama";
-            this.txtNama.Size = new System.Drawing.Size(200, 22);
-            this.txtNama.TabIndex = 9;
+            this.txtNama.Size = new System.Drawing.Size(154, 22);
+            this.txtNama.TabIndex = 8;
             // 
             // CBLevel
             // 
             this.CBLevel.Items.AddRange(new object[] {
             "1",
             "2"});
-            this.CBLevel.Location = new System.Drawing.Point(173, 181);
+            this.CBLevel.Location = new System.Drawing.Point(150, 180);
             this.CBLevel.Name = "CBLevel";
-            this.CBLevel.Size = new System.Drawing.Size(200, 24);
-            this.CBLevel.TabIndex = 10;
+            this.CBLevel.Size = new System.Drawing.Size(154, 24);
+            this.CBLevel.TabIndex = 9;
+            this.CBLevel.SelectedIndexChanged += new System.EventHandler(this.CBLevel_SelectedIndexChanged);
             // 
-            // dataGridView1
+            // btnSave
             // 
-            this.dataGridView1.ColumnHeadersHeight = 29;
-            this.dataGridView1.Location = new System.Drawing.Point(117, 293);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.Size = new System.Drawing.Size(721, 296);
-            this.dataGridView1.TabIndex = 12;
+            this.btnSave.Location = new System.Drawing.Point(486, 20);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(80, 40);
+            this.btnSave.TabIndex = 10;
+            this.btnSave.Text = "Save";
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(647, 30);
+            this.btnSearch.Location = new System.Drawing.Point(590, 20);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(128, 46);
-            this.btnSearch.TabIndex = 13;
+            this.btnSearch.Size = new System.Drawing.Size(87, 40);
+            this.btnSearch.TabIndex = 11;
             this.btnSearch.Text = "Search";
-            this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // btnUpdate
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(446, 96);
+            this.btnUpdate.Location = new System.Drawing.Point(486, 84);
             this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(128, 46);
-            this.btnUpdate.TabIndex = 14;
+            this.btnUpdate.Size = new System.Drawing.Size(80, 38);
+            this.btnUpdate.TabIndex = 12;
             this.btnUpdate.Text = "Update";
-            this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(647, 96);
+            this.btnDelete.Location = new System.Drawing.Point(590, 84);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(128, 46);
-            this.btnDelete.TabIndex = 15;
+            this.btnDelete.Size = new System.Drawing.Size(87, 39);
+            this.btnDelete.TabIndex = 13;
             this.btnDelete.Text = "Delete";
-            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(446, 169);
+            this.btnClear.Location = new System.Drawing.Point(486, 140);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(128, 46);
-            this.btnClear.TabIndex = 16;
+            this.btnClear.Size = new System.Drawing.Size(80, 36);
+            this.btnClear.TabIndex = 14;
             this.btnClear.Text = "Clear";
-            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnLogout
             // 
-            this.btnLogout.Location = new System.Drawing.Point(647, 169);
+            this.btnLogout.Location = new System.Drawing.Point(590, 140);
             this.btnLogout.Name = "btnLogout";
-            this.btnLogout.Size = new System.Drawing.Size(128, 46);
-            this.btnLogout.TabIndex = 17;
+            this.btnLogout.Size = new System.Drawing.Size(87, 36);
+            this.btnLogout.TabIndex = 15;
             this.btnLogout.Text = "Logout";
-            this.btnLogout.UseVisualStyleBackColor = true;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
-            // btnSave
+            // dataGridView1
             // 
-            this.btnSave.Location = new System.Drawing.Point(446, 30);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(128, 46);
-            this.btnSave.TabIndex = 18;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.dataGridView1.ColumnHeadersHeight = 29;
+            this.dataGridView1.Location = new System.Drawing.Point(109, 271);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 51;
+            this.dataGridView1.Size = new System.Drawing.Size(598, 189);
+            this.dataGridView1.TabIndex = 16;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellContentClick);
             // 
             // FrmMain
             // 
-            this.ClientSize = new System.Drawing.Size(990, 648);
-            this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.btnLogout);
-            this.Controls.Add(this.btnClear);
-            this.Controls.Add(this.btnDelete);
-            this.Controls.Add(this.btnUpdate);
-            this.Controls.Add(this.btnSearch);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label5);
+            this.ClientSize = new System.Drawing.Size(803, 472);
+            this.Controls.Add(this.lblIDPengguna);
+            this.Controls.Add(this.lblUsername);
+            this.Controls.Add(this.lblPassword);
+            this.Controls.Add(this.lblNamaPengguna);
+            this.Controls.Add(this.lblLevel);
             this.Controls.Add(this.txtID);
             this.Controls.Add(this.txtUsername);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtNama);
             this.Controls.Add(this.CBLevel);
+            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.btnSearch);
+            this.Controls.Add(this.btnUpdate);
+            this.Controls.Add(this.btnDelete);
+            this.Controls.Add(this.btnClear);
+            this.Controls.Add(this.btnLogout);
             this.Controls.Add(this.dataGridView1);
             this.Name = "FrmMain";
-            this.Load += new System.EventHandler(this.FrmMain_Load);
+            this.Text = "FrmMain";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
-        #endregion
+        //private void btnSave_Click(object sender, EventArgs e)
+        //{
+        //    // Add your save logic here
+        //}
 
-        // Deklarasi private kontrol yang hilang
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtID;
-        private System.Windows.Forms.TextBox txtUsername;
-        private System.Windows.Forms.TextBox txtPassword;
-        private System.Windows.Forms.TextBox txtNama;
-        private System.Windows.Forms.ComboBox CBLevel;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.Button btnUpdate;
-        private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button btnClear;
-        private System.Windows.Forms.Button btnLogout;
-        private System.Windows.Forms.Button btnSave;
+        //private void btnSearch_Click(object sender, EventArgs e)
+        //{
+        //    // Add your search logic here
+        //}
+
+        //private void btnUpdate_Click(object sender, EventArgs e)
+        //{
+        //    // Add your update logic here
+        //}
+
+        //private void btnDelete_Click(object sender, EventArgs e)
+        //{
+        //    // Add your delete logic here
+        //}
+
+        //private void btnClear_Click(object sender, EventArgs e)
+        //{
+        //    // Add your clear logic here
+        //}
+
+        //private void btnLogout_Click(object sender, EventArgs e)
+        //{
+        //    // Add your logout logic here
+        //}
+        //private void btnSave_Click(object sender, EventArgs e)
+        //{
+        //    // Add the logic to handle the save button click event
+        //    MessageBox.Show("Save button clicked!");
+        //}
+
     }
 }
